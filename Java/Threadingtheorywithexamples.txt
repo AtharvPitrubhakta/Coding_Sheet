@@ -1,0 +1,117 @@
+Threading:
+	Java allows multi threading using :
+a) Thread Class
+b) Runnable Interface
+
+For e.g: Using Class
+
+class the1 extends Thread
+{
+public static void main(String[] args)
+{
+System.out.println("Main Started");
+the1 p1=new the1();
+the1 p2=new the1();
+p1.start();
+p2.start();
+System.out.println("Main Ends");
+}
+public void run()
+{
+for(int i=1;i<=5;i++)
+{
+System.out.println("Thread "+Thread.currentThread()+" "+i);
+try
+{
+Thread.sleep(1000);
+}catch(Exception ee){}
+}
+}
+} 
+
+For e.g: Using Interface
+
+class the2 implements Runnable
+{
+public static void main(String[] args)
+{
+System.out.println("Main Started");
+the2 p=new the2();
+
+Thread p1=new Thread(p);
+Thread p2=new Thread(p);
+p1.start();
+p2.start();
+System.out.println("Main Ends");
+}
+public void run()
+{
+for(int i=1;i<=5;i++)
+{
+System.out.println("Thread "+Thread.currentThread()+" "+i);
+try
+{
+Thread.sleep(100);
+}catch(Exception ee){}
+}
+}
+} 
+
+Using Thread for Animation:
+import java.awt.*;
+import java.awt.event.*;
+import java.applet.*;
+public class the3 extends Applet implements Runnable
+{
+Graphics g;
+Thread t;
+public void init()
+{
+g=getGraphics();
+Font f=new Font("Courier",Font.BOLD,34);
+g.setFont(f);
+t=new Thread(this);
+t.start();
+}
+public void run()
+{
+for(int i=1;i<=500;i++)
+drawme("Java Programming",50,i);
+}
+void drawme(String s,int x,int y)
+{
+g.setColor(Color.black);
+g.fillRect(0,0,500,500);
+g.setColor(Color.yellow);
+g.drawString(s,x,y);
+try
+{
+Thread.sleep(10);
+}catch(Exception ee){}
+}
+}
+/*<applet height=600 width=600 code=the3></applet>*/
+
+Thread Life Cycle:
+A thread is in following stages in its life:
+a) Born Stage
+b) Runnable Stage
+c) Blocked Stage
+d) Dead Stage
+
+	Born Stage	new Thread()
+              |
+	   | calls start()   sleep()
+	Runnable --------------------> Blocked
+	  |	<-------------------        
+run() over	  |	undone sleep()
+	Dead
+
+Priorities:	Every thread comes with a priority, which is inherited from its parent. This priority can be changed so that the execution take place accordingly.
+a) setPriority()
+	Thread t=new Thread(this);
+	t.setPriority(10);	1 to 10
+		
+b) getPriority()
+	Thread t=new Thread(this);
+	int x=t.getPriority();
